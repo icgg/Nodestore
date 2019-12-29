@@ -1,12 +1,11 @@
 const path = require('path');
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
 const mongoose = require('mongoose');
-//const mongoConnect = require('./util/database').mongoConnect;
+
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
@@ -16,15 +15,8 @@ const MongoDBStore = require('connect-mongodb-session')(session); //yields a con
 const User = require('./models/user');
 const errorController = require('./controllers/error');
 
-// const sequelize = require('./util/database');
-// const Product = require('./models/product');
-// const User = require('./models/user');
-// const Cart = require('./models/cart');
-// const CartItem = require('./models/cart-item');
-// const Order = require('./models/order');
-// const OrderItem = require('./models/order-item');
 
-const MONGODB_URI = '';
+const MONGODB_URI = ''; //MongoDB API Key
 
 const app = express();
 const store = new MongoDBStore({
@@ -33,7 +25,7 @@ const store = new MongoDBStore({
 });
 const csrfTokenMachine = csrf();
 
-const fileStorage = multer.diskStorage({
+const fileStorage = multer.diskStorage({  //store images directly on to the server
   destination: (req, file, cb) => {
     cb(null, 'images');
   },
@@ -42,7 +34,7 @@ const fileStorage = multer.diskStorage({
   }
 })
 
-const fileFilter = (req, file, cb) => {
+const fileFilter = (req, file, cb) => { //set file/image upload filter
   if(file.mimetype === 'image/png' ||
      file.mimetype === 'image/jpg' ||
      file.mimetype === 'image/jpeg')
@@ -102,7 +94,7 @@ app.use(errorController.get404);
 
 mongoose.connect(MONGODB_URI)
 .then(result => {
-    app.listen(3000);
+    app.listen(3030);
   })
   .catch(err => {
     console.log(err);

@@ -4,7 +4,7 @@
 // let db;
 
 // const mongoConnect = cb => {
-//     MongoClient.connect('mongodb+srv://notredame:LODnh5enrVIfeOLn@muster-7ahno.mongodb.net/test?retryWrites=true&w=majority')
+//     MongoClient.connect('DB_apikey')
 //     .then(client => {
 //         console.log('Connected');
 //         db = client.db();   //storing a connection to the database

@@ -7,21 +7,11 @@ const { validationResult } = require('express-validator');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth:{
-    api_key: ''
+    api_key: 'send_grid_key'
   }
 })); //specifies a configuration for sending emails
 
 exports.getLogin = (req, res, next) => {
-    
-    // const isLoggedIn = req
-    //   .get('Cookie')
-    //   .split('=')[1] === 'true';
-
-    //   const isLoggedIn = req
-    //   .get('Cookie')
-    //   .split(';')[1]
-    //   .trim()
-    //   .split('=')[1] === 'true';
   
     let message = req.flash('error'); //req.flash('key') returns an array of messages
     if (message.length > 0)
@@ -41,41 +31,6 @@ exports.getLogin = (req, res, next) => {
       });
 
 }
-
-
-// exports.postLogin = (req, res, next) => {
-   
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     User.findOne({email: email})
-//       .then(user => {
-
-//         if(!user){
-//           req.flash('error', "Invalid email or password") //sets value, and when page is redirected, the error message is passed as a parameter to the render function
-//           return res.redirect('/login');
-//         }
-//         bcrypt.compare(password, user.password)
-//         .then(match => {
-//             if(!match){
-//               return res.redirect('/');
-//             }
-//             req.session.isLoggedIn = true; //creates a cookie associated with the sessions id
-//             req.session.user = user;
-//             return req.session.save((err) =>{ //executes synchronously, because redirecting may occur in fractional time before the session is updated
-//               console.log(err);
-//               res.redirect('/');
-//             })
-//         })
-//         .catch(err => console.log(err))
- 
-//       })
-//       .catch(err => console.log(err));
-  
-// }
-
-
-
-
 
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
@@ -175,22 +130,6 @@ exports.postLogout = (req, res, next) => {
 
 }
 
-// exports.postSignup = (req, res, next) => {
-
-//   const email = req.body.email;
-//   const password = req.body.password;
-//   const confirmPassword = req.body.confirmPassword;
-//   const errors = validationResult(req);
-//   if(!errors.isEmpty()){
-//     return res.status(422)
-//     .render('auth/signup', {
-//       path: '/signup',
-//       pageTitle: 'Signup',
-//       isAuthenticated: false,
-//       errorMessage: message
-//     });
-//   }
-
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -223,12 +162,6 @@ exports.postSignup = (req, res, next) => {
     })
     .then(result => {
       res.redirect('/login');
-      // return transporter.sendMail({
-      //   to: email,
-      //   from: 'shop@node-complete.com',
-      //   subject: 'Signup succeeded!',
-      //   html: '<h1>You successfully signed up!</h1>'
-      // });
     })
     .catch(err => {
       const error = new Error(err);

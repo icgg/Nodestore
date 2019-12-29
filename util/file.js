@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs');       //helper function to delete file
 
 const deleteFile = (filePath) => {
     fs.unlink(filePath, (err) => {
